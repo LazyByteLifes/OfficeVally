@@ -193,36 +193,7 @@
           </view>
 
           <view class="modal-content">
-            <view wx:if="{{currentEmpSkill.brand === 'Gamma'}}" class="gamma-grid">
-              <view wx:for="{{gammaSlots}}" wx:key="*this" class="gamma-card {{castStepIndex >= item + 1 ? 'gamma-on' : 'gamma-off'}}" style="border-color: {{castStepIndex === item + 1 ? currentEmpSkill.brandColor : 'transparent'}};">
-                <view class="gamma-line"></view>
-                <view class="gamma-line short"></view>
-                <view class="gamma-center">
-                  <text wx:if="{{castStepIndex > item + 1}}" class="gamma-icon">✅</text>
-                  <text wx:elif="{{castStepIndex === item + 1}}" class="gamma-icon">⏳</text>
-                </view>
-              </view>
-            </view>
-
-            <view wx:if="{{currentEmpSkill.brand === 'Napkin'}}" class="napkin">
-              <view class="napkin-row">
-                <view class="napkin-node"></view>
-                <view class="napkin-line"></view>
-                <view class="napkin-node"></view>
-              </view>
-              <view class="napkin-row">
-                <view class="napkin-line vertical"></view>
-                <view class="napkin-node"></view>
-                <view class="napkin-line vertical"></view>
-              </view>
-              <view class="napkin-row">
-                <view class="napkin-node"></view>
-                <view class="napkin-line"></view>
-                <view class="napkin-node"></view>
-              </view>
-            </view>
-
-            <view wx:if="{{currentEmpSkill.brand === 'DeepSeek' || currentEmpSkill.brand === 'Kimi'}}" class="cast-text" style="color: {{currentEmpSkill.brandColor}};">
+            <view class="cast-text" style="color: {{currentEmpSkill.brandColor}};">
               {{currentCastStepText}}
             </view>
           </view>

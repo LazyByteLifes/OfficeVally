@@ -1,9 +1,7 @@
 import React, { useState, useMemo, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
-  Briefcase,
   PhoneCall,
-  Zap,
   Smile,
   FileText,
   ArrowLeft,
@@ -11,17 +9,11 @@ import {
   Play,
   Lock,
   Cpu,
-  Presentation,
-  Network,
-  Loader2,
   Send,
   MessageCircle,
   Trophy,
   ExternalLink,
   Sparkles,
-  Layout,
-  MousePointer2,
-  Check,
 } from "lucide-react";
 
 // --- 常量数据 ---
@@ -29,9 +21,7 @@ const OFFICE_BG_URL = "https://img.bytelife.ai/officevalley/background.jpg";
 
 const BOSS_SKILLS = [
   { id: "b1", name: "下班·封印术", nickname: "17:59分的发起人", desc: "17:59 发起会议，锁定下班按钮", attackText: "快下班了，`简单`开个会，所有人进会议室！", satisfiedText: "既然你还有紧急交付，那这次会你先不用参加了，看纪要吧。", icon: PhoneCall },
-  { id: "b2", name: "微操·周报催命", nickname: "对齐颗粒度的王总", desc: "要求精确到分钟的日报，体力减半", attackText: "这周产出不够饱和啊，发个周报看看？", satisfiedText: "这个总结非常有深度，看到你对底层架构的思考了，不错。", icon: FileText },
-  { id: "b3", name: "零点·PPT降临", nickname: "画饼非遗继承人", desc: "明早就要方案，施加【通宵】Debuff", attackText: "明天一早我要看到方案 PPT！", satisfiedText: "效率很高！方案逻辑很清晰，早点休息，明天汇报用这个。", icon: Presentation },
-  { id: "b4", name: "降维·文字过敏", nickname: "闭环守门大魔王", desc: "拒绝阅读文字，强制要求商业架构图", attackText: "字太多我不爱看！给我画个商业架构图！", satisfiedText: "这就是我要的视觉化表达！一目了然，以后都按这个标准出图。", icon: Network }
+  { id: "b2", name: "微操·周报催命", nickname: "对齐颗粒度的王总", desc: "要求精确到分钟的日报，体力减半", attackText: "这周产出不够饱和啊，发个周报看看？", satisfiedText: "这个总结非常有深度，看到你对底层架构的思考了，不错。", icon: FileText }
 ];
 
 const ALL_EMP_SKILLS = [
@@ -48,24 +38,10 @@ const ALL_EMP_SKILLS = [
     techTitle: "Kimi.ai 智能扩写", 
     castSteps: ["扫描原始日报文本...", "提取核心交付物...", "注入‘底层逻辑’等大厂黑话...", "生成深度工作复盘..."],
     actionBtn: "生成周报", resultType: "file", resultTitle: "本周工作复盘.docx", resultDesc: "字数: 3,420 | 查重率: 0% | 黑话浓度: 极高", link: "https://kimi.moonshot.cn/" 
-  },
-  { 
-    id: "e3", name: "Gamma·光速PPT", nickname: "AI咒语·摸鱼仙人", desc: "Gamma 一键生成 PPT", icon: Zap, 
-    brand: "Gamma", brandColor: "#6C47FF", brandIcon: Layout, 
-    techTitle: "Gamma 一键生成PPT", 
-    castSteps: ["解析大纲: 数字化转型方案", "生成第 1 页: 封面与概览", "生成第 2 页: 现状深度分析", "生成第 3 页: 核心解决方案", "生成第 4 页: 商业模式闭环", "生成第 5 页: 落地路线图", "生成第 6 页: 预期收益展望", "最后排版校验，准备交付！"],
-    actionBtn: "交付 PPT", resultType: "file", resultTitle: "Q4_商业计划书_vFinal.ppt", resultDesc: "页数: 15P | 主题: 科技蓝 | 生成耗时: 30s", link: "https://gamma.app/" 
-  },
-  { 
-    id: "e4", name: "Napkin·画饼具象化", nickname: "带薪如厕国家队", desc: "文字转架构图", icon: Briefcase, 
-    brand: "Napkin", brandColor: "#FF6B00", brandIcon: MousePointer2, 
-    techTitle: "Napkin 自动绘制架构图", 
-    castSteps: ["提取文本逻辑节点...", "建立核心业务链路...", "识别层级映射关系...", "渲染 SVG 矢量图形...", "线条边缘平滑优化...", "导出透明架构图..."],
-    actionBtn: "导出架构图", resultType: "image", resultTitle: "业务逻辑架构图.svg", resultDesc: "矢量高清 | 包含: 流程图/层级图/鱼骨图", link: "https://napkin.ai/" 
   }
 ];
 
-const SKILL_LINKAGE = { b1: ["e1"], b2: ["e2"], b3: ["e3"], b4: ["e4"] };
+const SKILL_LINKAGE = { b1: ["e1"], b2: ["e2"] };
 
 // --- 2. 打字机组件 ---
 function Typewriter({ text, speed = 30, delay = 0, onComplete, className = "" }) {
@@ -361,39 +337,11 @@ function BattleScene({ bossSkill, empSkill, onBack }) {
                 </div>
 
                 <div className="flex-1 flex items-center justify-center mb-6">
-                  {empSkill.brand === 'Gamma' && (
-                    <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 w-full">
-                      {[0,1,2,3,4,5].map(idx => (
-                        <div key={idx} className={`aspect-[4/3] bg-white/5 border rounded-lg p-2 transition-all ${castStepIndex >= (idx + 1) ? 'opacity-100' : 'opacity-20'}`} style={{ borderColor: castStepIndex === idx + 1 ? empSkill.brandColor : 'transparent' }}>
-                          <div className="h-1 w-3/4 bg-white/20 rounded mb-1" />
-                          <div className="mt-2 flex justify-center">
-                            {castStepIndex > idx + 1 ? <Check size={10} className="text-green-500" /> : castStepIndex === idx + 1 ? <Loader2 size={10} className="animate-spin text-white/50" /> : null}
-                          </div>
-                        </div>
-                      ))}
+                  <div className="space-y-4 w-full">
+                    <div className="bg-white/5 border border-white/10 px-4 py-3 rounded-xl text-sm md:text-base font-medium leading-relaxed" style={{ color: empSkill.brandColor }}>
+                      {empSkill.castSteps[castStepIndex]}
                     </div>
-                  )}
-                  {/* ... Napkin SVG 保持原样，SVG 会自适应父容器 ... */}
-                  {empSkill.brand === 'Napkin' && (
-                    <div className="w-full flex justify-center">
-                      <svg width="200" height="100" viewBox="0 0 240 120" className="max-w-full h-auto overflow-visible">
-                        <motion.circle cx="120" cy="20" r="10" stroke={empSkill.brandColor} strokeWidth="2" fill="none" animate={{ opacity: castStepIndex >= 1 ? 1 : 0 }} />
-                        <motion.circle cx="50" cy="60" r="10" stroke={empSkill.brandColor} strokeWidth="2" fill="none" animate={{ opacity: castStepIndex >= 2 ? 1 : 0 }} />
-                        <motion.circle cx="190" cy="60" r="10" stroke={empSkill.brandColor} strokeWidth="2" fill="none" animate={{ opacity: castStepIndex >= 2 ? 1 : 0 }} />
-                        <motion.circle cx="120" cy="100" r="10" stroke={empSkill.brandColor} strokeWidth="2" fill="none" animate={{ opacity: castStepIndex >= 3 ? 1 : 0 }} />
-                        {castStepIndex >= 2 && <motion.path d="M 110 30 L 60 50" stroke={empSkill.brandColor} fill="none" initial={{ pathLength: 0 }} animate={{ pathLength: 1 }} />}
-                        {castStepIndex >= 2 && <motion.path d="M 130 30 L 180 50" stroke={empSkill.brandColor} fill="none" initial={{ pathLength: 0 }} animate={{ pathLength: 1 }} />}
-                        {castStepIndex >= 3 && <motion.path d="M 60 70 L 110 90" stroke={empSkill.brandColor} fill="none" initial={{ pathLength: 0 }} animate={{ pathLength: 1 }} />}
-                      </svg>
-                    </div>
-                  )}
-                  {(empSkill.brand === 'DeepSeek' || empSkill.brand === 'Kimi') && (
-                    <div className="space-y-4 w-full">
-                      <div className="bg-white/5 border border-white/10 px-4 py-3 rounded-xl text-sm md:text-base font-medium leading-relaxed" style={{ color: empSkill.brandColor }}>
-                        {empSkill.castSteps[castStepIndex]}
-                      </div>
-                    </div>
-                  )}
+                  </div>
                 </div>
 
                 <div className="pt-4 border-t border-white/5 flex flex-col items-center">
