@@ -42,10 +42,23 @@ Page({
   },
 
   onLoad(options) {
+    this._isActive = true;
     const skillId = options && options.id;
     const skill = GUIDE_SKILLS[skillId] || GUIDE_SKILLS.e1;
     this.setData({ skill });
     this.startTyping(skill.masterPrompt);
+  },
+
+  onShow() {
+    this._isActive = true;
+  },
+
+  onHide() {
+    this._isActive = false;
+    if (this._typingTimer) {
+      clearInterval(this._typingTimer);
+      this._typingTimer = null;
+    }
   },
 
   buildPromptNodes(text) {
@@ -75,6 +88,7 @@ Page({
 
     let index = 0;
     this._typingTimer = setInterval(() => {
+      if (!this._isActive) return;
       index += 2;
       const snippet = fullText.slice(0, index);
       this.setData({ promptNodes: this.buildPromptNodes(snippet) });
@@ -106,6 +120,7 @@ Page({
   },
 
   onUnload() {
+    this._isActive = false;
     if (this._typingTimer) clearInterval(this._typingTimer);
   }
 });

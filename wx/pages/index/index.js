@@ -16,7 +16,7 @@ const BOSS_SKILLS = [
     nickname: "对齐颗粒度的王总",
     desc: "要求精确到分钟的日报，体力减半",
     attackText: "这周产出不够饱和啊，发个周报看看？",
-    satisfiedText: "这个总结非常有深度，看到你对底层架构的思考了，不错。",
+    satisfiedText: "这个总结非常有深度，看到你对底层架构的思考了，不错！",
     iconEmoji: "🧾"
   }
 ];
@@ -112,7 +112,17 @@ Page({
     this.updateAvailableEmpSkills();
   },
 
+  onShow() {
+    this._isActive = true;
+  },
+
+  onHide() {
+    this._isActive = false;
+    this.clearBattleTimers();
+  },
+
   onUnload() {
+    this._isActive = false;
     this.clearAllTimers();
   },
 
