@@ -259,7 +259,7 @@ export default function App() {
           <GuideScene
             key="guide"
             skill={guideSkill || GUIDE_SKILLS.e1}
-            onBack={() => setScene("battle")}
+            onBack={() => setScene("select")}
           />
         )}
       </AnimatePresence>
